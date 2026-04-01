@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu Digital</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+</head>
+<body style="text-align: center; font-family: sans-serif;">
+    <h1 id="restoName">Chargement...</h1>
+    <img id="foodImg" src="" style="width: 80%; border-radius: 15px;">
+    <h2 id="foodName"></h2>
+    <h3 id="foodPrice" style="color: green;"></h3>
+
+    <script>
+        // Config Firebase (Copiez depuis votre console Firebase)
+        const firebaseConfig = { 
+            apiKey: "...", 
+            databaseURL: "https://VOTRE-PROJET.firebaseio.com" 
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Récupérer l'ID du resto dans l'URL
+        const params = new URLSearchParams(window.location.search);
+        const restoId = params.get('id');
+
+        firebase.database().ref('Menus/' + restoId).on('value', (snap) => {
+            const data = snap.val();
+            document.getElementById('restoName').innerText = restoId;
+            document.getElementById('foodName').innerText = data.name;
+            document.getElementById('foodPrice').innerText = data.price;
+            document.getElementById('foodImg').src = data.image;
+        });
+    </script>
+</body>
+</html>

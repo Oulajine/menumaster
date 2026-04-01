@@ -17,7 +17,9 @@
             apiKey: "...", 
             databaseURL: "https://menumaster-2ef99-default-rtdb.firebaseio.com" 
         };
+        if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
+    }
 
         // Récupérer l'ID du resto dans l'URL
         const params = new URLSearchParams(window.location.search);
